@@ -21,6 +21,7 @@ func _physics_process(delta: float) -> void:
 			
 	var velocity = dir.normalized() * speed
 	self.velocity = move_and_slide(velocity)
+	
 
 func handleRelativePosition():
 	sprite.set_z_index(int(gameScene.player.position.y < position.y))

@@ -20,7 +20,7 @@ func _ready() -> void:
 	startLevel()
 
 func _debug():
-	pass
+	return
 	if enemies.get_children().size():
 		$CanvasLayer/Line2D.points = nav.get_simple_path(enemies.get_child(0).position, player.position)
 	

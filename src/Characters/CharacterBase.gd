@@ -16,6 +16,7 @@ const HIT = "hit"
 export var velocity: = Vector2.ZERO
 export var dir: = Vector2.ZERO
 export var speed: = 8 * UNIT
+export var acceleration:= 16 * 8 * UNIT
 
 export var hp: = 1
 export var dmg: = 1

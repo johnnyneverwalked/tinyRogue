@@ -19,8 +19,18 @@ func _ready() -> void:
 	
 	
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:		
+	handleInput()
+	handleMovement(delta)
+
+	velocity = move_and_slide(velocity)	
+
+func _process(_delta: float) -> void:	
+	var mousePos = get_global_mouse_position()
+	sprite.set_flip_h(mousePos.x < position.x)
 	
+
+func handleInput():
 	if !rolling:
 		dir.x = -Input.get_action_strength("left") + Input.get_action_strength("right")
 		dir.y = -Input.get_action_strength("up") + Input.get_action_strength("down")
@@ -37,16 +47,19 @@ func _physics_process(_delta: float) -> void:
 			
 	elif dir == Vector2.ZERO:
 		dir = Vector2(1, 0)				
-		
-	
-	var velocity = (dir * speed)		
-	
-	self.velocity = move_and_slide(velocity)	
 
-func _process(_delta: float) -> void:	
-	var mousePos = get_global_mouse_position()
-	sprite.set_flip_h(mousePos.x < position.x)
+func handleMovement(delta: float):
 	
+	if dir != Vector2.ZERO:
+		velocity += dir * acceleration * delta
+		velocity = velocity.clamped(speed)
+		return
+	
+	var friction: float = acceleration * delta
+	if velocity.length() > friction:
+		velocity -= velocity.normalized() * friction
+	else:
+		velocity = Vector2.ZERO
 
 func _on_AnimatedSprite_animation_finished() -> void:
 	rolling = false

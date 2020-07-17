@@ -58,7 +58,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 5.82157, 2.90978 )
+extents = Vector2( 4.92395, 2.90978 )
 
 [node name="Dino" type="KinematicBody2D"]
 collision_layer = 2
@@ -69,12 +69,11 @@ script = ExtResource( 1 )
 position = Vector2( 0.358978, 0 )
 frames = SubResource( 9 )
 animation = "idle"
-frame = 2
 playing = true
 
 [node name="collision" type="CollisionShape2D" parent="."]
 self_modulate = Color( 0.352941, 0.635294, 0.270588, 1 )
-position = Vector2( 1.71773, 12.6666 )
+position = Vector2( 1.08952, 12.6666 )
 shape = SubResource( 10 )
 
 [node name="StateMachine" type="Node" parent="."]
