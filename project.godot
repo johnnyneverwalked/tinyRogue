@@ -14,40 +14,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/Characters/CharacterBase.gd"
 }, {
-"base": "Resource",
-"class": "CtxFRef1",
-"language": "GDScript",
-"path": "res://src/utility/goldenGadget/CtxFRef1.gd"
-}, {
-"base": "Resource",
-"class": "CtxFRef2",
-"language": "GDScript",
-"path": "res://src/utility/goldenGadget/CtxFRef2.gd"
-}, {
 "base": "KinematicBody2D",
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://src/Characters/enemies/EnemyBase.gd"
-}, {
-"base": "Resource",
-"class": "FlowF",
-"language": "GDScript",
-"path": "res://src/utility/goldenGadget/FlowF.gd"
-}, {
-"base": "Resource",
-"class": "GGArray",
-"language": "GDScript",
-"path": "res://src/utility/goldenGadget/GGArray.gd"
-}, {
-"base": "Resource",
-"class": "GGInternal",
-"language": "GDScript",
-"path": "res://src/utility/goldenGadget/GGInternal.gd"
-}, {
-"base": "Node",
-"class": "GGTests",
-"language": "GDScript",
-"path": "res://src/utility/goldenGadget/GGTests.gd"
 }, {
 "base": "",
 "class": "GitAPI",
@@ -61,13 +31,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Character": "",
-"CtxFRef1": "",
-"CtxFRef2": "",
 "Enemy": "",
-"FlowF": "",
-"GGArray": "",
-"GGInternal": "",
-"GGTests": "",
 "GitAPI": "",
 "StateMachine": ""
 }
@@ -155,6 +119,7 @@ swap_spell_2={
 2d_physics/layer_3="Items"
 2d_render/layer_4="Tiles"
 2d_physics/layer_4="Tiles"
+2d_physics/layer_5="Projectiles"
 
 [rendering]
 

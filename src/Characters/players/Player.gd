@@ -4,7 +4,20 @@ extends "res://src/Characters/CharacterBase.gd"
 # States
 const ROLL = "roll"
 
+
+# Bullets
+enum ELEMENTS {FIRE, WATER, EARTH, AIR}
+onready var BULLETS = {
+	"base": {
+		"node": preload("res://src/Projectiles/Bullet.tscn"),
+		"elements": [],
+		"fireRate": 20
+	}
+}
+var fireCooldown = 0
+
 var rolling: bool = false
+
 
 func _ready() -> void:
 	rolling = false
@@ -46,7 +59,11 @@ func handleInput():
 			state_machine.change_state(ROLL)
 			
 	elif dir == Vector2.ZERO:
-		dir = Vector2(1, 0)				
+		dir = Vector2(1, 0)
+		
+	# fire
+	if Input.is_action_pressed("attack"):
+		pass
 
 func handleMovement(delta: float):
 	

@@ -18,6 +18,7 @@ var actionPause = 0
 func _ready() -> void:
 	setWorldOptions()
 	startLevel()
+	startLevel()
 
 func _debug():
 	return
@@ -41,7 +42,7 @@ func setWorldOptions(options = {}):
 		"largePaths": true,
 		"levelSize": Vector2(50, 50),
 		"numberOfRooms": 1,
-		"startingRoom": Vector2(10, 10),
+#		"startingRoom": Vector2(10, 10),
 		"minRoom": Vector2(18, 18),
 		"maxRoom": Vector2(18, 18),
 		"autoTile": true
@@ -65,6 +66,7 @@ func startLevel():
 	var startingRoom: Rect2 = worldGen.rooms[startingRoomIndex]
 	
 	player.set_position(tileMap.map_to_world(_getRoomPos(startingRoom)))
+	
 	preload("res://src/Characters/enemies/Dino/Dino.tscn")
 	
 	# set exit position
