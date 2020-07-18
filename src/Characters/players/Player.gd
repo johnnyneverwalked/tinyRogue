@@ -7,17 +7,19 @@ const ROLL = "roll"
 
 # Bullets
 enum ELEMENTS {FIRE, WATER, EARTH, AIR}
+
 onready var BULLETS = {
 	"base": {
 		"node": preload("res://src/Projectiles/Bullet.tscn"),
 		"elements": [],
-		"fireRate": 20
+		"cooldown": 20
 	}
 }
 var fireCooldown = 0
 
 var rolling: bool = false
 
+# --- METHODS
 
 func _ready() -> void:
 	rolling = false
@@ -35,12 +37,14 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:		
 	handleInput()
 	handleMovement(delta)
-
 	velocity = move_and_slide(velocity)	
 
-func _process(_delta: float) -> void:	
+func _process(delta: float) -> void:	
 	var mousePos = get_global_mouse_position()
 	sprite.set_flip_h(mousePos.x < position.x)
+	
+	fireCooldown = fireCooldown - delta * 60 if fireCooldown > 0 else 0
+
 	
 
 func handleInput():
@@ -63,7 +67,15 @@ func handleInput():
 		
 	# fire
 	if Input.is_action_pressed("attack"):
-		pass
+		fireBullet()
+
+func fireBullet():
+	if fireCooldown	> 0:
+		return
+	fireCooldown = BULLETS.base.cooldown
+	var bullet = BULLETS.base.node.instance()
+	
+	emit_signal("shoot", bullet, position, position.direction_to(get_global_mouse_position()))	
 
 func handleMovement(delta: float):
 	

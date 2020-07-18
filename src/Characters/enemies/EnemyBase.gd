@@ -5,13 +5,14 @@ class_name Enemy
 var gameScene: Node
 var nav: Navigation2D
 
-
 func _ready() -> void:
-	speed = speed / 2
 	set_process(false)
+	set_meta("enemy", true)
+	
+	speed = speed / 2
 
 func _physics_process(delta: float) -> void:
-	chase(delta * speed)
+#	chase(delta * speed)
 	handleRelativePosition()
 	
 	if dir == Vector2.ZERO:
@@ -31,7 +32,7 @@ func chase(distance: float):
 	var start = position
 	for i in path.size():
 		var distToNext = start.distance_to(path[0])
-		if distance <= distToNext && distance > 0.0:
+		if distance <= distToNext && distance > 0:
 			dir = start.direction_to(path[0])
 			break
 		elif distance <= 0.0:

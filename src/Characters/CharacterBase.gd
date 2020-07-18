@@ -3,6 +3,8 @@ extends KinematicBody2D
 class_name Character
 
 signal died
+# warning-ignore:unused_signal
+signal shoot
 
 # Consts
 const UNIT = 16
@@ -30,7 +32,6 @@ onready var debug: Label = $Label
 
 
 func _ready() -> void:
-	
 	state_machine.connect("state_entered", self, "state_entered")
 	state_machine.connect("state_exited", self, "state_exited")
 	state_machine.add_state(IDLE)
@@ -53,7 +54,7 @@ func _ready() -> void:
 	state_machine._run()
 	
 	
-func state_exited(state):
+func state_exited(_state):
 	pass
 	
 func state_entered(state):
@@ -70,4 +71,7 @@ func state_entered(state):
 
 func die():
 	emit_signal("died", self)
-	queue_free()			
+	queue_free()
+
+func take_damage():
+	print_debug("OUCH")

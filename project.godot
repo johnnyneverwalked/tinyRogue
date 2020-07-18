@@ -120,6 +120,7 @@ swap_spell_2={
 2d_render/layer_4="Tiles"
 2d_physics/layer_4="Tiles"
 2d_physics/layer_5="Projectiles"
+2d_physics/layer_6="Hitboxes"
 
 [rendering]
 

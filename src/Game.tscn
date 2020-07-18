@@ -635,7 +635,7 @@ pause_mode = 1
 tile_set = SubResource( 65 )
 cell_size = Vector2( 16, 16 )
 collision_layer = 8
-collision_mask = 3
+collision_mask = 19
 format = 1
 tile_data = PoolIntArray( 1048616, 2, 0 )
 
@@ -643,3 +643,4 @@ tile_data = PoolIntArray( 1048616, 2, 0 )
 
 [node name="Enemies" type="Node" parent="."]
 [connection signal="loaded" from="WorldGenerator" to="." method="_on_WorldGenerator_loaded"]
+[connection signal="shoot" from="Player" to="." method="_on_Character_shoot"]

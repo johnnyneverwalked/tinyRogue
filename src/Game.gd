@@ -97,4 +97,10 @@ func addEnemy(enemyType: String, pos: Vector2):
 	Enemies[enemyType].pos = pos
 	enemies.add_child(enemy)
 	enemy.set_position(tileMap.map_to_world(pos))
+	
+	
+func _on_Character_shoot(bullet, _position, _direction):
+		add_child(bullet)
+		bullet.start(_position, _direction)
+
 

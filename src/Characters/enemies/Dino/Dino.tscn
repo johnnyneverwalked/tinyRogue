@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/Characters/enemies/Dino/Dino.gd" type="Script" id=1]
 [ext_resource path="res://src/Characters/StateMachine.gd" type="Script" id=2]
@@ -60,6 +60,10 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 4.92395, 2.90978 )
 
+[sub_resource type="CapsuleShape2D" id=11]
+radius = 6.22619
+height = 3.77351
+
 [node name="Dino" type="KinematicBody2D"]
 collision_layer = 2
 collision_mask = 9
@@ -89,3 +93,11 @@ text = "state"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="hitbox" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+position = Vector2( 1.01975, 7.96618 )
+shape = SubResource( 11 )
