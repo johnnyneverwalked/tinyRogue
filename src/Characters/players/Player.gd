@@ -13,6 +13,11 @@ onready var BULLETS = {
 		"node": preload("res://src/Projectiles/Bullet.tscn"),
 		"elements": [],
 		"cooldown": 20
+	},
+	"bubble": {
+		"node": preload("res://src/Projectiles/Water/Bubbles.tscn"),
+		"elements": [ELEMENTS.WATER],
+		"cooldown": 20
 	}
 }
 var fireCooldown = 0
@@ -70,12 +75,19 @@ func handleInput():
 		fireBullet()
 
 func fireBullet():
-	if fireCooldown	> 0:
+	if fireCooldown	> 0 || state_machine.current_state == ROLL:
 		return
-	fireCooldown = BULLETS.base.cooldown
-	var bullet = BULLETS.base.node.instance().setup(dmg)
 	
-	emit_signal("shoot", bullet, position, position.direction_to(get_global_mouse_position()))	
+	var bulletType = BULLETS["bubble"]
+	fireCooldown = bulletType.cooldown
+
+	var bullet = bulletType.node.instance().setup(dmg)
+	for i in range(bullet.bulletsPerShot):
+		emit_signal("shoot", bullet, position, position.direction_to(get_global_mouse_position()))
+		if i == bullet.bulletsPerShot - 1:
+			break
+		yield(get_tree().create_timer(0.05), "timeout")
+		bullet = bulletType.node.instance().setup(dmg)
 
 func _on_AnimatedSprite_animation_finished() -> void:
 	rolling = false

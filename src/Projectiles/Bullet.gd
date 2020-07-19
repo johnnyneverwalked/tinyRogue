@@ -10,6 +10,7 @@ export var speed: = 16 * UNIT
 export var knockback: = UNIT * UNIT
 export var damage: = 0
 export var spread = 0.2
+export var bulletsPerShot: = 1
 export var status: int
 
 var velocity: = Vector2.ZERO
@@ -39,7 +40,10 @@ func _process(delta: float) -> void:
 func explode():
 	collider.queue_free()
 	sprite.visible = false
+	
+	particles.explosiveness = 1
 	particles.emitting = true
+	
 	yield(get_tree().create_timer(particles.lifetime * 2),"timeout")
 	queue_free()		
 
