@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-class_name Character
+class_name CharacterBase
 
 signal died
 # warning-ignore:unused_signal
@@ -22,14 +22,13 @@ export var acceleration:= 16 * 8 * UNIT
 
 export var hp: = 1
 export var dmg: = 1
+export var weight: = 1
 
 onready var state_machine = $StateMachine
 onready var sprite: AnimatedSprite = $AnimatedSprite
 onready var animPlayer: AnimationPlayer = $AnimationPlayer
 
 onready var debug: Label = $Label
-
-
 
 func _ready() -> void:
 	state_machine.connect("state_entered", self, "state_entered")
@@ -63,15 +62,33 @@ func state_entered(state):
 		sprite.play(state)
 		
 	match state:
-		MOVE:
-			pass
+		HIT:
+			yield(get_tree().create_timer(0.5),"timeout")
+			state_machine.change_state(IDLE)
 		IDLE:
 			pass		
 					
+
+func handleMovement(delta: float):
+	if dir != Vector2.ZERO && (state_machine.current_state != HIT || velocity == Vector2.ZERO):
+		velocity += dir * acceleration * delta
+		velocity = velocity.clamped(speed)
+		return
+	
+	var friction: float = acceleration * delta
+	if velocity.length() > friction:
+		velocity -= velocity.normalized() * friction
+	else:
+		velocity = Vector2.ZERO
+
+func handle_knockback(_knockback: Vector2):
+	velocity += _knockback / weight
 
 func die():
 	emit_signal("died", self)
 	queue_free()
 
-func take_damage():
-	print_debug("OUCH")
+func take_damage(_damage = 0, _knockback = Vector2.ZERO, _status = null):
+	state_machine.change_state(HIT)
+	print_debug([_damage, _knockback, _status])
+	handle_knockback(_knockback)

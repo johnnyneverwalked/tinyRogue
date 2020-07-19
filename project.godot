@@ -10,12 +10,12 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "KinematicBody2D",
-"class": "Character",
+"class": "CharacterBase",
 "language": "GDScript",
 "path": "res://src/Characters/CharacterBase.gd"
 }, {
 "base": "KinematicBody2D",
-"class": "Enemy",
+"class": "EnemyBase",
 "language": "GDScript",
 "path": "res://src/Characters/enemies/EnemyBase.gd"
 }, {
@@ -30,8 +30,8 @@ _global_script_classes=[ {
 "path": "res://src/Characters/StateMachine.gd"
 } ]
 _global_script_class_icons={
-"Character": "",
-"Enemy": "",
+"CharacterBase": "",
+"EnemyBase": "",
 "GitAPI": "",
 "StateMachine": ""
 }

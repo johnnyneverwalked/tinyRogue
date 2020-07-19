@@ -73,22 +73,9 @@ func fireBullet():
 	if fireCooldown	> 0:
 		return
 	fireCooldown = BULLETS.base.cooldown
-	var bullet = BULLETS.base.node.instance()
+	var bullet = BULLETS.base.node.instance().setup(dmg)
 	
 	emit_signal("shoot", bullet, position, position.direction_to(get_global_mouse_position()))	
-
-func handleMovement(delta: float):
-	
-	if dir != Vector2.ZERO:
-		velocity += dir * acceleration * delta
-		velocity = velocity.clamped(speed)
-		return
-	
-	var friction: float = acceleration * delta
-	if velocity.length() > friction:
-		velocity -= velocity.normalized() * friction
-	else:
-		velocity = Vector2.ZERO
 
 func _on_AnimatedSprite_animation_finished() -> void:
 	rolling = false

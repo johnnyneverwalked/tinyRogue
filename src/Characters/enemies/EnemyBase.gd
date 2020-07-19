@@ -1,6 +1,6 @@
 extends "res://src/Characters/CharacterBase.gd"
 
-class_name Enemy
+class_name EnemyBase
 
 var gameScene: Node
 var nav: Navigation2D
@@ -9,18 +9,22 @@ func _ready() -> void:
 	set_process(false)
 	set_meta("enemy", true)
 	
-	speed = speed / 2
+	speed /= 2
+	acceleration
 
 func _physics_process(delta: float) -> void:
-#	chase(delta * speed)
+	chase(delta * speed)
 	handleRelativePosition()
+	handleMovement(delta)
 	
-	if dir == Vector2.ZERO:
-		state_machine.change_state(IDLE)
-	else:
-		state_machine.change_state(MOVE)
-			
-	var velocity = dir.normalized() * speed
+	match state_machine.current_state:
+		MOVE:
+			if dir == Vector2.ZERO:
+				state_machine.change_state(IDLE)
+		IDLE:
+			if dir != Vector2.ZERO:
+				state_machine.change_state(MOVE)
+
 	self.velocity = move_and_slide(velocity)
 
 func handleRelativePosition():
@@ -30,6 +34,7 @@ func chase(distance: float):
 	
 	var path = nav.get_simple_path(position, gameScene.player.position)
 	var start = position
+	
 	for i in path.size():
 		var distToNext = start.distance_to(path[0])
 		if distance <= distToNext && distance > 0:
