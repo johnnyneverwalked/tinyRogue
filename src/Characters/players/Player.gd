@@ -4,30 +4,25 @@ extends "res://src/Characters/CharacterBase.gd"
 # States
 const ROLL = "roll"
 
+#refs
+onready var scentTimer:= $ScentTimer
+const scent_scene = preload("Scent.tscn")
 
-# Bullets
-enum ELEMENTS {FIRE, WATER, EARTH, AIR}
-
-onready var BULLETS = {
-	"base": {
-		"node": preload("res://src/Projectiles/Bullet.tscn"),
-		"elements": [],
-		"cooldown": 20
-	},
-	"bubble": {
-		"node": preload("res://src/Projectiles/Water/Bubbles.tscn"),
-		"elements": [ELEMENTS.WATER],
-		"cooldown": 20
-	}
-}
+# data
 var fireCooldown = 0
-
 var rolling: bool = false
+var scentTrail = []
+
+#signals
+signal drop_scent
 
 # --- METHODS
 
 func _ready() -> void:
 	rolling = false
+	scentTimer.connect("timeout", self, "add_scent")
+	
+	
 	state_machine.add_state(ROLL)
 	
 	state_machine.add_transition(ROLL, MOVE, MOVE)
@@ -78,7 +73,7 @@ func fireBullet():
 	if fireCooldown	> 0 || state_machine.current_state == ROLL:
 		return
 	
-	var bulletType = BULLETS["bubble"]
+	var bulletType = Global.BULLETS["base"]
 	fireCooldown = bulletType.cooldown
 
 	var bullet = bulletType.node.instance().setup(dmg)
@@ -88,6 +83,16 @@ func fireBullet():
 			break
 		yield(get_tree().create_timer(0.05), "timeout")
 		bullet = bulletType.node.instance().setup(dmg)
+
+
+func add_scent():
+	var scent      = scent_scene.instance()
+	scent.player   = self
+	scent.position = position
+	
+	emit_signal("drop_scent", scent)
+	scentTrail.push_front(scent)
+
 
 func _on_AnimatedSprite_animation_finished() -> void:
 	rolling = false

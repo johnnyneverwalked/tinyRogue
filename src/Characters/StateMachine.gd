@@ -52,6 +52,8 @@ func add_transition(from_state, to_state, trans_name, trans_value = false):
 	states[from_state].add_connection(to_state, trans_name, trans_value)
 
 func change_state(to_state):
+	if to_state == current_state:
+		return
 	emit_signal("state_exited", current_state)
 	set_current_state(to_state)
 	

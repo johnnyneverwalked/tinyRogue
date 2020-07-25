@@ -6,7 +6,6 @@ const Enemies: Dictionary = {
 
 onready var worldGen: Node = $WorldGenerator
 onready var tileMap: TileMap = $Navigation2D/TileMap
-onready var nav: Navigation2D = $Navigation2D
 onready var currentSeed:= $CanvasLayer/Seed
 onready var player:= $Player
 onready var enemies:= $Enemies
@@ -22,8 +21,6 @@ func _ready() -> void:
 
 func _debug():
 	return
-	if enemies.get_children().size():
-		$CanvasLayer/Line2D.points = nav.get_simple_path(enemies.get_child(0).position, player.position)
 	
 func _process(_delta: float) -> void:
 	_debug()
@@ -41,9 +38,9 @@ func setWorldOptions(options = {}):
 		"margins": [true, false, false, false],
 		"largePaths": true,
 		"levelSize": Vector2(50, 50),
-		"numberOfRooms": 1,
+		"numberOfRooms": 2,
 #		"startingRoom": Vector2(10, 10),
-		"minRoom": Vector2(18, 18),
+		"minRoom": Vector2(10, 10),
 		"maxRoom": Vector2(18, 18),
 		"autoTile": true
 	})
@@ -99,8 +96,9 @@ func addEnemy(enemyType: String, pos: Vector2):
 	enemy.set_position(tileMap.map_to_world(pos))
 	
 	
-func _on_Character_shoot(bullet, _position, _direction):
-		add_child(bullet)
+func _on_Character_shoot(bullet: Area2D, _position: Vector2, _direction: Vector2):
+		$Bullets.add_child(bullet)
 		bullet.start(_position, _direction)
 
-
+func _on_Player_drop_scent(scent: Node2D) -> void:
+	$Effects.add_child(scent)

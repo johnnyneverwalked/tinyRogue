@@ -626,8 +626,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Line2D" type="Line2D" parent="CanvasLayer"]
-
 [node name="WorldGenerator" parent="." instance=ExtResource( 1 )]
 pause_mode = 1
 
@@ -642,7 +640,13 @@ format = 1
 tile_data = PoolIntArray( 1048616, 2, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
+position = Vector2( 258.276, 141.31 )
 
 [node name="Enemies" type="Node" parent="."]
+
+[node name="Effects" type="Node" parent="."]
+
+[node name="Bullets" type="Node" parent="."]
 [connection signal="loaded" from="WorldGenerator" to="." method="_on_WorldGenerator_loaded"]
+[connection signal="drop_scent" from="Player" to="." method="_on_Player_drop_scent"]
 [connection signal="shoot" from="Player" to="." method="_on_Character_shoot"]

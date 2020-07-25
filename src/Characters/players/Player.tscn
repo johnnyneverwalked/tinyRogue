@@ -89,10 +89,10 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=13]
-extents = Vector2( 1.90475, 0.24424 )
+extents = Vector2( 1.5537, 0.224909 )
 
 [node name="Player" type="KinematicBody2D"]
-position = Vector2( 864, 432 )
+position = Vector2( -0.00850677, 0.147022 )
 z_index = 1
 collision_mask = 10
 script = ExtResource( 1 )
@@ -108,7 +108,7 @@ frame = 4
 playing = true
 
 [node name="collision" type="CollisionShape2D" parent="."]
-position = Vector2( 1.50861, 12.8901 )
+position = Vector2( 1.84458, 13.3969 )
 scale = Vector2( 3.3861, 13.6854 )
 shape = SubResource( 13 )
 
@@ -124,11 +124,15 @@ limit_top = 0
 limit_smoothed = true
 smoothing_enabled = true
 
-[node name="Label" type="Label" parent="."]
-margin_left = 10.0349
-margin_top = -8.36243
-margin_right = 50.0349
-margin_bottom = 5.63757
+[node name="ScentTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="State" type="Label" parent="."]
+margin_left = 874.043
+margin_top = 423.491
+margin_right = 914.043
+margin_bottom = 437.491
 text = "state"
 __meta__ = {
 "_edit_use_anchors_": false

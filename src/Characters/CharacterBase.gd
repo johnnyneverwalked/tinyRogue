@@ -28,7 +28,7 @@ onready var state_machine = $StateMachine
 onready var sprite: AnimatedSprite = $AnimatedSprite
 onready var animPlayer: AnimationPlayer = $AnimationPlayer
 
-onready var debug: Label = $Label
+onready var debug: Label = $State
 
 func _ready() -> void:
 	state_machine.connect("state_entered", self, "state_entered")
@@ -66,8 +66,11 @@ func state_entered(state):
 			yield(get_tree().create_timer(0.5),"timeout")
 			state_machine.change_state(IDLE)
 		IDLE:
-			pass		
+			pass
 					
+
+func getSize():
+	return sprite.frames.get_frame(IDLE, 0).get_size()
 
 func handleMovement(delta: float):
 	if dir != Vector2.ZERO && (state_machine.current_state != HIT || velocity == Vector2.ZERO):
